@@ -1,17 +1,18 @@
 ﻿<Properties StartupConfiguration="{E13EA586-6386-1E8E-10AE-40CF3DB0A50A}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Basket.cs">
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="Unity.Editor" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/HighScore.cs">
     <Files>
       <File FileName="Assets/AppleTree.cs" Line="35" Column="55" />
-      <File FileName="Assets/Apple.cs" Line="7" Column="37" />
-      <File FileName="Assets/ApplePicker.cs" Line="11" Column="38" />
-      <File FileName="Assets/Basket.cs" Line="16" Column="9" />
+      <File FileName="Assets/Apple.cs" Line="30" Column="2" />
+      <File FileName="Assets/ApplePicker.cs" Line="57" Column="48" />
+      <File FileName="Assets/Basket.cs" Line="60" Column="37" />
+      <File FileName="Assets/HighScore.cs" Line="31" Column="45" />
     </Files>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="Unity.Editor" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MultiItemStartupConfigurations />
 </Properties>
