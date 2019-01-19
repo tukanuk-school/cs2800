@@ -65,20 +65,21 @@
     <Compile Include="Assets\AppleTree.cs" />
     <Compile Include="Assets\Basket.cs" />
     <Compile Include="Assets\HighScore.cs" />
+    <Compile Include="Assets\Splash.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>/Users/benjamin/dev/cs2800/david11n_ApplePickerProject/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+      <HintPath>/Volumes/MACSTORE/Users/benjamin/dev/cs2800/david11n_ApplePickerProject/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.PackageManagerUI.Editor">
-      <HintPath>/Users/benjamin/dev/cs2800/david11n_ApplePickerProject/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
+      <HintPath>/Volumes/MACSTORE/Users/benjamin/dev/cs2800/david11n_ApplePickerProject/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.CollabProxy.Editor">
-      <HintPath>/Users/benjamin/dev/cs2800/david11n_ApplePickerProject/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
+      <HintPath>/Volumes/MACSTORE/Users/benjamin/dev/cs2800/david11n_ApplePickerProject/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>/Users/benjamin/dev/cs2800/david11n_ApplePickerProject/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>/Volumes/MACSTORE/Users/benjamin/dev/cs2800/david11n_ApplePickerProject/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.DataPrivacy">
-      <HintPath>/Users/benjamin/dev/cs2800/david11n_ApplePickerProject/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
+      <HintPath>/Volumes/MACSTORE/Users/benjamin/dev/cs2800/david11n_ApplePickerProject/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>/Applications/Unity/Unity.app/Contents/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
@@ -283,6 +284,21 @@
     </Reference>
     <Reference Include="UnityEngine.SpatialTracking">
       <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Advertisements">
+      <HintPath>/Volumes/MACSTORE/Users/benjamin/dev/cs2800/david11n_ApplePickerProject/Library/PackageCache/com.unity.ads@2.3.1/Runtime/UnityEngine.Advertisements.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Advertisements.Editor">
+      <HintPath>/Volumes/MACSTORE/Users/benjamin/dev/cs2800/david11n_ApplePickerProject/Library/PackageCache/com.unity.ads@2.3.1/Runtime/UnityEngine.Advertisements.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Analytics.Editor">
+      <HintPath>/Volumes/MACSTORE/Users/benjamin/dev/cs2800/david11n_ApplePickerProject/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Analytics.StandardEvents">
+      <HintPath>/Volumes/MACSTORE/Users/benjamin/dev/cs2800/david11n_ApplePickerProject/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.StandardEvents.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Analytics.Tracker">
+      <HintPath>/Volumes/MACSTORE/Users/benjamin/dev/cs2800/david11n_ApplePickerProject/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>/Applications/Unity/Unity.app/Contents/NetStandard/ref/2.0.0/netstandard.dll</HintPath>

@@ -45,8 +45,14 @@ public class AppleTree : MonoBehaviour
 
         // Gradual rotation
         Quaternion rot = transform.rotation;
-        rot.y += 3 * Time.deltaTime;
-        transform.rotation = rot;
+        if (rot.y < 170f)
+        {
+            rot.y += 0.5f * Time.deltaTime;
+        }
+        else { 
+            rot.y -= 0.5f * Time.deltaTime;
+        }
+            transform.rotation = rot;
 
 
         // Changing Direction
