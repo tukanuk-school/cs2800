@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PaperRockScissor : MonoBehaviour
 {
@@ -8,30 +9,65 @@ public class PaperRockScissor : MonoBehaviour
     public int numRounds = 10;
     public string playerOneInput;
     public string playerTwoInput;
-    public int currentRound = 1;
+    public Text currentRound;
+
+    public Text playerOneScore;
+    public Text playerTwoScore;
 
     // Start is called before the first frame update
     void Start()
     {
-        // while (currentRound < numRounds)
-        // {
-            
-        // }
+        // find reference to round counter
+        GameObject roundCounterGO = GameObject.Find("RoundLabelCounter");
+        currentRound = roundCounterGO.GetComponent<Text>();
+        currentRound.text = "1";
+
+        // find reference to player one score
+        GameObject playerOneScoreGO = GameObject.Find("PlayerOneScore");
+        playerOneScore = playerOneScoreGO.GetComponent<Text>();
+        playerOneScore.text = "0";
+
+        // find reference to player two score
+        GameObject playerTwoScoreGO = GameObject.Find("PlayerTwoScore");
+        playerTwoScore = playerTwoScoreGO.GetComponent<Text>();
+        playerTwoScore.text = "0";
     }
 
     // Update is called once per frame
     void Update()
     {
-        while (currentRound < numRounds)
-        {
-            GetPlayerInput();
 
-            if (playerOneInput != "" && playerTwoInput != "")
+        GetPlayerInput();
+
+        if (playerOneInput != "" && playerTwoInput != "")
+        {
+            if (playerOneInput.Equals(playerTwoInput) != true)
             {
-                playerOneInput = "";
-                playerTwoInput = "";
-                ++currentRound;
+
+                // game logic
+                if (playerOneInput.Equals("paper") && playerTwoInput.Equals("rock") ||
+                    playerOneInput.Equals("rock") && playerTwoInput.Equals("scissors") ||
+                    playerOneInput.Equals("scissors") && playerTwoInput.Equals("paper"))
+                {
+                    int point = int.Parse(playerOneScore.text);
+                    point++;
+                    playerOneScore.text = point.ToString();
+                }
+                else
+                {
+                    int point = int.Parse(playerTwoScore.text);
+                    point++;
+                    playerTwoScore.text = point.ToString();
+                }
+
+                int round = int.Parse(currentRound.text);
+                round++;
+                currentRound.text = round.ToString();
+
             }
+
+            playerOneInput = "";
+            playerTwoInput = "";
         }
     }
 
