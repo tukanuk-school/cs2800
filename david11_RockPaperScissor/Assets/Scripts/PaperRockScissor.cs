@@ -8,7 +8,7 @@ public class PaperRockScissor : MonoBehaviour
     public int numRounds = 10;
     public string playerOneInput;
     public string playerTwoInput;
-    public int currentRound;
+    public int currentRound = 1;
 
     // Start is called before the first frame update
     void Start()
@@ -22,18 +22,23 @@ public class PaperRockScissor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        getPlayerInput();
-
-        if (playerOneInput != "" && playerTwoInput != "")
+        while (currentRound < numRounds)
         {
-            currentRound++;
-            playerOneInput = "";
-            playerTwoInput = "";
+            GetPlayerInput();
+
+            if (playerOneInput != "" && playerTwoInput != "")
+            {
+                playerOneInput = "";
+                playerTwoInput = "";
+                ++currentRound;
+            }
         }
     }
 
-    void getPlayerInput()
+    // Watches for valid player input
+    void GetPlayerInput()
     {
+        // Watches for valid player input
         if (Input.GetKey(KeyCode.A))
         {
             playerOneInput = "paper";
