@@ -20,6 +20,7 @@ public class Rock : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // spins the PRS around the middle of screen
         transform.RotateAround(Vector3.zero, Vector3.back, speed * Time.deltaTime);
         transform.Rotate(Vector3.up, -speed * Time.deltaTime);
     }
