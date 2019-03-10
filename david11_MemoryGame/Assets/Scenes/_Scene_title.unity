@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.44742775, g: 0.49285775, b: 0.5510048, a: 1}
+  m_IndirectSpecularColor: {r: 0.4474275, g: 0.49285728, b: 0.55100435, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -148,7 +148,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -130, y: -145}
+  m_AnchoredPosition: {x: -117.000015, y: -145}
   m_SizeDelta: {x: 200, y: 79}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &26815126
@@ -668,15 +668,15 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_audioClip: {fileID: 8300000, guid: eee6642bd6f2e466fafade177b91cd25, type: 3}
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 117
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
@@ -1278,7 +1278,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: d99373ab86e0048dc80f8d662316f693, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.990566, g: 0.98920476, b: 0.378471, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1363,7 +1363,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 109.00002, y: -145}
+  m_AnchoredPosition: {x: 122, y: -145}
   m_SizeDelta: {x: 200, y: 79}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1680712721

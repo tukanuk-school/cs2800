@@ -17,7 +17,7 @@ public class TitleController : MonoBehaviour
 
         startButton.onClick.AddListener(() => ButtonClicked(1));
         exitButton.onClick.AddListener(() => ButtonClicked(2));
-        audioSource.clip = audioClip;
+        //audioSource.clip = audioClip;
 
     }
 
@@ -26,11 +26,12 @@ public class TitleController : MonoBehaviour
         switch(v)
         {
             case 1:
-
+                //StartCoroutine(PlayAudio());
                 audioSource.Play();
                 SceneManager.LoadScene("_Scene_1");
                 break;
             case 2:
+                audioSource.Play();
                 Application.Quit();
                 break;
         }
@@ -40,4 +41,10 @@ public class TitleController : MonoBehaviour
 
     }
 
-  }
+    IEnumerator PlayAudio()
+    {
+        yield return new WaitForSeconds(2.5f);
+        audioSource.Play();
+        yield return new WaitForSeconds(0.5f);
+    }
+}

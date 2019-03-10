@@ -8,13 +8,22 @@ using Random = UnityEngine.Random;
 public class GameController : MonoBehaviour
 {
     [SerializeField]
-    private Sprite bgImage;
+    private Sprite bgImage; // card bg image
 
     public Sprite[] puzzles;
     public List<Sprite> gamePuzzles = new List<Sprite>();
 
-
     public List<Button> btns = new List<Button>();
+
+    public int GameScore = 1000;
+    public float startGameTime, endGameTime;
+    public int ScoreText;
+    public float TimeText;
+
+    public Text WinningMessageText;
+
+    public Text ScoreTextLabel;
+    public Text TimeTextLabel;
 
     private bool firstGuess, secondGuess;
 
@@ -35,10 +44,26 @@ public class GameController : MonoBehaviour
     {
         GetButtons();
         AddListeners();
+        GetUI();
         AddGamePuzzles();
         Shuffle(gamePuzzles);
 
+        startGameTime = Time.time;
+
         gameGuesses = gamePuzzles.Count / 2;
+    }
+
+    private void Update()
+    {
+        float tempTime = Time.time;
+        TimeTextLabel.text = ((tempTime - startGameTime).ToString());
+    }
+
+    private void GetUI()
+    {
+        ScoreTextLabel.text = "1000";
+        TimeTextLabel.text = "0";
+        WinningMessageText.text = "";
     }
 
     void GetButtons() 
@@ -104,15 +129,6 @@ public class GameController : MonoBehaviour
 
 
             StartCoroutine(CheckIfThePuzzlesMatch());
-
-            //if(firstGuessPuzzle == secondGuessPuzzle)
-            //{
-            //    Debug.Log("Puzzles match");
-            //}
-            //else
-            //{
-            //    Debug.Log("Puzzles don't match");
-            //}
         }
     }
 
@@ -132,17 +148,21 @@ public class GameController : MonoBehaviour
             btns[firstGuessIndex].image.color = new Color(0, 0, 0, 0);
             btns[secondGuessIndex].image.color = new Color(0, 0, 0, 0);
 
-
             CheckIfTheGameIsFinished();
         }
         else
         {
             btns[firstGuessIndex].image.sprite = bgImage;
             btns[secondGuessIndex].image.sprite = bgImage;
+
+            GameScore -= 40;
         }
 
         yield return new WaitForSeconds(0.25f);
         firstGuess = secondGuess = false;
+        Debug.Log("Score: " + GameScore);
+        ScoreTextLabel.text = GameScore.ToString();
+
 
     }
 
@@ -152,9 +172,18 @@ public class GameController : MonoBehaviour
 
         if (correctGuesses == gameGuesses)
         {
-            Debug.Log("game finsihed");
-            Debug.Log("It took " + countGuesses + " to finish!");
-        }
+            endGameTime = Time.time;
+            Debug.Log("game finished");
+            Debug.Log("It took " + countGuesses + " guesses to finish!");
+            Debug.Log("It took " + (endGameTime - startGameTime) + " seconds to finish!");
+
+            String temp = String.Format("You Win!\n Your score was " +
+                "{0} and it took {1} guess and {2} seconds", GameScore.ToString(),
+                countGuesses.ToString(), (endGameTime - startGameTime).ToString() );
+
+            WinningMessageText.text = temp;
+
+}
     }
 
     void Shuffle (List<Sprite> list)
