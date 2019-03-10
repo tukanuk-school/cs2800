@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
@@ -35,6 +36,13 @@ public class GameController : MonoBehaviour
     private string firstGuessPuzzle, secondGuessPuzzle;
 
 
+    public AudioSource audioSource;
+    public AudioClip flipItAudioClip;
+    public AudioClip goodJobAudioClip;
+    public AudioClip tryAgainAudioClip;
+    public AudioClip YouWinAudioClip;
+
+
     private void Awake()
     {
         puzzles = Resources.LoadAll<Sprite>("Cards");
@@ -56,7 +64,7 @@ public class GameController : MonoBehaviour
     private void Update()
     {
         float tempTime = Time.time;
-        TimeTextLabel.text = ((tempTime - startGameTime).ToString());
+        TimeTextLabel.text = ((tempTime - startGameTime).ToString("###.0"));
     }
 
     private void GetUI()
@@ -119,6 +127,10 @@ public class GameController : MonoBehaviour
 
             btns[firstGuessIndex].image.sprite = gamePuzzles[firstGuessIndex];
 
+            audioSource.clip = flipItAudioClip;
+            audioSource.Play();
+
+
         } else if (!secondGuess)
         {
             secondGuess = true;
@@ -148,6 +160,9 @@ public class GameController : MonoBehaviour
             btns[firstGuessIndex].image.color = new Color(0, 0, 0, 0);
             btns[secondGuessIndex].image.color = new Color(0, 0, 0, 0);
 
+            audioSource.clip = goodJobAudioClip;
+            audioSource.Play();
+
             CheckIfTheGameIsFinished();
         }
         else
@@ -156,6 +171,9 @@ public class GameController : MonoBehaviour
             btns[secondGuessIndex].image.sprite = bgImage;
 
             GameScore -= 40;
+
+            audioSource.clip = tryAgainAudioClip;
+            audioSource.Play();
         }
 
         yield return new WaitForSeconds(0.25f);
@@ -173,17 +191,30 @@ public class GameController : MonoBehaviour
         if (correctGuesses == gameGuesses)
         {
             endGameTime = Time.time;
+            TimeTextLabel.text = endGameTime.ToString();
             Debug.Log("game finished");
             Debug.Log("It took " + countGuesses + " guesses to finish!");
             Debug.Log("It took " + (endGameTime - startGameTime) + " seconds to finish!");
 
             String temp = String.Format("You Win!\n Your score was " +
-                "{0} and it took {1} guess and {2} seconds", GameScore.ToString(),
-                countGuesses.ToString(), (endGameTime - startGameTime).ToString() );
+                "{0}. It took you {1} guesses over {2} seconds", GameScore.ToString(),
+                countGuesses.ToString(), (endGameTime - startGameTime).ToString("###.0") );
 
             WinningMessageText.text = temp;
 
-}
+            audioSource.clip = YouWinAudioClip;
+            audioSource.Play();
+
+            StartCoroutine(RestartTheGame());
+
+        }
+    }
+
+    IEnumerator RestartTheGame()
+    {
+        yield return new WaitForSeconds(5.0f);
+        SceneManager.LoadScene("_Scene_title");
+
     }
 
     void Shuffle (List<Sprite> list)

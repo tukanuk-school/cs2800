@@ -26,8 +26,8 @@ public class TitleController : MonoBehaviour
         switch(v)
         {
             case 1:
-                //StartCoroutine(PlayAudio());
-                audioSource.Play();
+                StartCoroutine(PlayAudio());
+
                 SceneManager.LoadScene("_Scene_1");
                 break;
             case 2:
@@ -43,7 +43,7 @@ public class TitleController : MonoBehaviour
 
     IEnumerator PlayAudio()
     {
-        yield return new WaitForSeconds(2.5f);
+        //yield return new WaitForSeconds(2.5f);
         audioSource.Play();
         yield return new WaitForSeconds(0.5f);
     }
