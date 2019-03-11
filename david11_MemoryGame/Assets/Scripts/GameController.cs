@@ -11,23 +11,25 @@ public class GameController : MonoBehaviour
     [SerializeField]
     private Sprite bgImage; // card bg image
 
+    // cards
     public Sprite[] puzzles;
     public List<Sprite> gamePuzzles = new List<Sprite>();
-
     public List<Button> btns = new List<Button>();
 
+    // score and timer 
     public int GameScore = 1000;
     public float startGameTime, endGameTime;
     public int ScoreText;
     public float TimeText;
 
+    // game over information
     public Text WinningMessageText;
-
     public Text ScoreTextLabel;
     public Text TimeTextLabel;
+    public Text winMessage1;
 
+    // guesses
     private bool firstGuess, secondGuess;
-
     private int countGuesses;
     private int correctGuesses;
     private int gameGuesses;
@@ -35,17 +37,23 @@ public class GameController : MonoBehaviour
 
     private string firstGuessPuzzle, secondGuessPuzzle;
 
-
+    // sound effects
     public AudioSource audioSource;
     public AudioClip flipItAudioClip;
     public AudioClip goodJobAudioClip;
     public AudioClip tryAgainAudioClip;
     public AudioClip YouWinAudioClip;
+    public AudioClip youLoseAudioClip;
 
 
     private void Awake()
     {
+        // load sprites
         puzzles = Resources.LoadAll<Sprite>("Cards");
+
+        // setup audioclips
+        youLoseAudioClip = (AudioClip)Resources.Load("Sounds/you_lose");
+
     }
 
     private void Start()
@@ -72,6 +80,9 @@ public class GameController : MonoBehaviour
         ScoreTextLabel.text = "1000";
         TimeTextLabel.text = "0";
         WinningMessageText.text = "";
+        GameObject go = GameObject.Find("WinningMessage1");
+        winMessage1 = go.GetComponent<Text>();
+        winMessage1.color = new Color(0, 0, 0, 0);
     }
 
     void GetButtons() 
@@ -133,14 +144,20 @@ public class GameController : MonoBehaviour
 
         } else if (!secondGuess)
         {
-            secondGuess = true;
+            // checks if you are clicking ojn the same card again
             secondGuessIndex = int.Parse(cardName);
-            secondGuessPuzzle = gamePuzzles[secondGuessIndex].name;
+            if (firstGuessIndex != secondGuessIndex)
+            {
+                secondGuess = true;
+                //secondGuessIndex = int.Parse(cardName);
+                secondGuessPuzzle = gamePuzzles[secondGuessIndex].name;
 
-            btns[secondGuessIndex].image.sprite = gamePuzzles[secondGuessIndex];
+                btns[secondGuessIndex].image.sprite = gamePuzzles[secondGuessIndex];
+
+                StartCoroutine(CheckIfThePuzzlesMatch());
+            }
 
 
-            StartCoroutine(CheckIfThePuzzlesMatch());
         }
     }
 
@@ -172,8 +189,38 @@ public class GameController : MonoBehaviour
 
             GameScore -= 40;
 
-            audioSource.clip = tryAgainAudioClip;
-            audioSource.Play();
+            if (GameScore <= 0)
+            {
+                endGameTime = Time.time;
+                TimeTextLabel.color = new Color(0, 0, 0, 0);
+                GameObject go = GameObject.Find("PuzzleField");
+                Destroy(go);
+                //Material material = go.GetComponentInChildren<Material>();
+                //foreach (Material m in material)
+                    //m.color = new Color(0, 0, 0, 0);
+
+
+                Debug.Log("You lose. Time was " + (endGameTime - startGameTime) + " seconds.");
+
+                String temp = String.Format("You took {0} guesses over {1} seconds",
+                    countGuesses.ToString(), (endGameTime - startGameTime).ToString("###.0"));
+
+                winMessage1.text = "You Lose";
+                winMessage1.color = new Color(1, 1, 1, 1);
+                WinningMessageText.text = temp;
+
+                audioSource.clip = youLoseAudioClip;
+                audioSource.Play();
+
+                StartCoroutine(RestartTheGame());
+            }
+            else
+            {
+                audioSource.clip = tryAgainAudioClip;
+                audioSource.Play();
+            }
+
+
         }
 
         yield return new WaitForSeconds(0.25f);
@@ -191,15 +238,17 @@ public class GameController : MonoBehaviour
         if (correctGuesses == gameGuesses)
         {
             endGameTime = Time.time;
-            TimeTextLabel.text = endGameTime.ToString();
+            TimeTextLabel.color = new Color(0, 0, 0, 0);
+
             Debug.Log("game finished");
             Debug.Log("It took " + countGuesses + " guesses to finish!");
             Debug.Log("It took " + (endGameTime - startGameTime) + " seconds to finish!");
 
-            String temp = String.Format("You Win!\n Your score was " +
+            String temp = String.Format("Your score was " +
                 "{0}. It took you {1} guesses over {2} seconds", GameScore.ToString(),
                 countGuesses.ToString(), (endGameTime - startGameTime).ToString("###.0") );
 
+            winMessage1.color = new Color(1, 1, 1, 1);
             WinningMessageText.text = temp;
 
             audioSource.clip = YouWinAudioClip;
