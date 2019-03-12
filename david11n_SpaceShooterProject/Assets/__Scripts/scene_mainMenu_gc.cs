@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class scene_mainMenu_gc: MonoBehaviour
 {
     // buttons
-    Button startButton, exitButton;
+    Button startButton, diffButton, setupButton, historyButotn, backButton;
 
     // sound effects
     public AudioSource audioSource;
@@ -25,13 +25,15 @@ public class scene_mainMenu_gc: MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GameObject go = GameObject.
-        startButton = go.GetComponent<Button>();
+       // listeners for each button
+       // ...
+
+        startButton = buttons.GetComponent<Button>();
         startButton.onClick.AddListener( () => MenuClick("start") );
         
-        go = GameObject.Find("ExitButton");
-        exitButton = go.GetComponent<Button>();
-        exitButton.onClick.AddListener( () => MenuClick("exit") );
+        buttons = GameObject.Find("ExitButton");
+        backButton = buttons.GetComponent<Button>();
+        backButton.onClick.AddListener( () => MenuClick("back") );
 
     }
 
@@ -42,7 +44,7 @@ public class scene_mainMenu_gc: MonoBehaviour
             case "start":
                 StartCoroutine(LoadSceneMM() );
                 break;
-            case "exit":
+            case "back":
                 StartCoroutine(QuitGame() );
                 break;
         }
