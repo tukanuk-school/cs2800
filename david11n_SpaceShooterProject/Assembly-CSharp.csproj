@@ -13,7 +13,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <BaseDirectory>.</BaseDirectory>
   </PropertyGroup>
@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\__Scripts\BoundsCheck.cs" />
+     <Compile Include="Assets\__Scripts\DontDestroy.cs" />
      <Compile Include="Assets\__Scripts\Enemy.cs" />
      <Compile Include="Assets\__Scripts\Enemy_1.cs" />
      <Compile Include="Assets\__Scripts\Enemy_2.cs" />
@@ -64,7 +65,8 @@
      <Compile Include="Assets\__Scripts\Player.cs" />
      <Compile Include="Assets\__Scripts\PowerUp.cs" />
      <Compile Include="Assets\__Scripts\Projectile.cs" />
-     <Compile Include="Assets\__Scripts\scene_0.cs" />
+     <Compile Include="Assets\__Scripts\scene_0_gc.cs" />
+     <Compile Include="Assets\__Scripts\scene_mainMenu_gc.cs" />
      <Compile Include="Assets\__Scripts\Shield.cs" />
      <Compile Include="Assets\__Scripts\Utils.cs" />
      <Compile Include="Assets\__Scripts\Weapon.cs" />

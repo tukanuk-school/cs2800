@@ -10,6 +10,7 @@ TagManager:
   - PowerUp
   - PowerUpBox
   - ProjectilePlayer
+  - music
   layers:
   - Default
   - TransparentFX
