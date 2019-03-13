@@ -4,10 +4,10 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class scene_mainMenu_gc: MonoBehaviour
+public class Scene_mainMenu_gc: MonoBehaviour
 {
     // buttons
-    Button startButton, diffButton, setupButton, historyButotn, backButton;
+    Button startButton, diffButton, setupButton, historyButton, backButton;
 
     // sound effects
     public AudioSource audioSource;
@@ -25,14 +25,28 @@ public class scene_mainMenu_gc: MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       // listeners for each button
-       // ...
+        // listeners for each button
+        // ...
 
-        startButton = buttons.GetComponent<Button>();
-        startButton.onClick.AddListener( () => MenuClick("start") );
-        
-        buttons = GameObject.Find("ExitButton");
-        backButton = buttons.GetComponent<Button>();
+        GameObject go;
+        go = GameObject.Find("StartButton");
+        startButton = go.GetComponent<Button>();
+        startButton.onClick.AddListener( () => MenuClick("1") );
+
+        go = GameObject.Find("DifficultyButton");
+        diffButton = go.GetComponent<Button>();
+        diffButton.onClick.AddListener(() => MenuClick("difficulty"));
+
+        go = GameObject.Find("SetupButton");
+        setupButton = go.GetComponent<Button>();
+        setupButton.onClick.AddListener(() => MenuClick("setup"));
+
+        go = GameObject.Find("HistoryButton");
+        historyButton= go.GetComponent<Button>();
+        historyButton.onClick.AddListener(() => MenuClick("history"));
+
+        go = GameObject.Find("ExitButton");
+        backButton = go.GetComponent<Button>();
         backButton.onClick.AddListener( () => MenuClick("back") );
 
     }
@@ -41,22 +55,31 @@ public class scene_mainMenu_gc: MonoBehaviour
     {
         switch(butNum)
         {
-            case "start":
-                StartCoroutine(LoadSceneMM() );
+            case "1":
+                StartCoroutine(LoadSceneMM(butNum) );
+                break;
+            case "difficulty":
+                StartCoroutine(LoadSceneMM(butNum));
+                break;
+            case "setup":
+                StartCoroutine(LoadSceneMM(butNum));
+                break;
+            case "history":
+                StartCoroutine(LoadSceneMM(butNum));
                 break;
             case "back":
-                StartCoroutine(QuitGame() );
+                StartCoroutine(LoadSceneMM("0") );
                 break;
         }
     }
 
-    IEnumerator LoadSceneMM()
+    IEnumerator LoadSceneMM(string butNum)
     {
         audioSource.clip = clickSound;
         audioSource.Play();
         yield return new WaitForSeconds(clickSound.length);
 
-        SceneManager.LoadScene("_Scene_mainMenu");
+        SceneManager.LoadScene("_Scene_" + butNum);
     }
     
     IEnumerator QuitGame()
@@ -65,6 +88,6 @@ public class scene_mainMenu_gc: MonoBehaviour
         audioSource.Play();
         yield return new WaitForSeconds(clickSound.length);
 
-        Application.Quit();
+        SceneManager.LoadScene("_Scene_0");
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class scene_0_gc : MonoBehaviour
+public class Scene_0_gc : MonoBehaviour
 {
     // buttons
     Button startButton, exitButton;

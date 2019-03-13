@@ -17,4 +17,22 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/_Scene_mainMenu.unity
     guid: 403c288f54e8b4248bf87ecaa0662233
+  - enabled: 1
+    path: Assets/Scenes/_Scene_1.unity
+    guid: 267858201dc2642558981c7d3911630c
+  - enabled: 1
+    path: Assets/Scenes/_Scene_difficulty.unity
+    guid: 3a530647190564ccd98f22b78583b13c
+  - enabled: 1
+    path: Assets/Scenes/_Scene_enemies.unity
+    guid: 9ddaf602c3c0541d48475e8c6ed8f70a
+  - enabled: 1
+    path: Assets/Scenes/_Scene_history.unity
+    guid: d2b0c3c095f6644d9bfa4e312077da3a
+  - enabled: 1
+    path: Assets/Scenes/_Scene_level.unity
+    guid: 3b76e5435abdd44f1ad062e40cefa410
+  - enabled: 1
+    path: Assets/Scenes/_Scene_setup.unity
+    guid: f94014b67c20b4afa88d5b9800fa13ba
   m_configObjects: {}
