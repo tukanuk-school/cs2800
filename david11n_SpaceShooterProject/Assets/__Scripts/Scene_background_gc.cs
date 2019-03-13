@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -38,9 +39,12 @@ public class Scene_background_gc : MonoBehaviour
         // listeners 
         GameObject go;
 
-        //go = GameObject.Find("StartButton");
-        //startButton = go.GetComponent<Button>();
-        //startButton.onClick.AddListener(() => MenuClick("1"));
+        go = GameObject.Find("Dropdown");
+        bgDropdown= go.GetComponent<Dropdown>();
+        bgDropdown.onValueChanged.AddListener(delegate
+        {
+           BGdropdownClick(bgDropdown);
+        });
 
         //go = GameObject.Find("DifficultyButton");
         //diffButton = go.GetComponent<Button>();
@@ -58,6 +62,25 @@ public class Scene_background_gc : MonoBehaviour
         backButton = go.GetComponent<Button>();
         backButton.onClick.AddListener(() => MenuClick("back"));
 
+        GameObject quad = GameObject.Find("ImageBG");
+        Renderer r = quad.GetComponent<Renderer>();
+        r.material.mainTexture = (Texture)Resources.Load("Backgrounds/warp_speed");
+
+    }
+
+    private void BGdropdownClick(Dropdown dd)
+    {
+        // access the value of the dropdown
+        Debug.Log(dd.options[dd.value].text);
+
+        // set BGImage
+        // add in Switch statement
+        GameObject go = GameObject.Find("BGImage");
+        Image image = go.GetComponent<Image>();
+        Sprite sprite = Resources.Load("Backgrounds/space_disco", typeof(Sprite)) as Sprite;
+        image.sprite = sprite;
+
+        // update BG on BACK
     }
 
     private void MenuClick(string butNum)

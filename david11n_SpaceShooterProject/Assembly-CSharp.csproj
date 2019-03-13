@@ -62,6 +62,7 @@
   <ItemGroup>
     <Compile Include="Assets\__Scripts\BoundsCheck.cs" />
     <Compile Include="Assets\__Scripts\DontDestroy.cs" />
+    <Compile Include="Assets\__Scripts\DontDestroyBG.cs" />
     <Compile Include="Assets\__Scripts\Enemy.cs" />
     <Compile Include="Assets\__Scripts\Enemy_1.cs" />
     <Compile Include="Assets\__Scripts\Enemy_2.cs" />
@@ -84,21 +85,21 @@
     <Compile Include="Assets\__Scripts\Shield.cs" />
     <Compile Include="Assets\__Scripts\Utils.cs" />
     <Compile Include="Assets\__Scripts\Weapon.cs" />
-    <None Include="Assets\_Materials\UnlitAlpha.shader" />
+    <None Include="Assets\Resources\_Materials\UnlitAlpha.shader" />
     <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>/Users/benjamin/dev/cs2800/david11n_SpaceShooterProject/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+      <HintPath>/Volumes/MACSTORE/Users/benjamin/dev/cs2800/david11n_SpaceShooterProject/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.PackageManagerUI.Editor">
-      <HintPath>/Users/benjamin/dev/cs2800/david11n_SpaceShooterProject/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
+      <HintPath>/Volumes/MACSTORE/Users/benjamin/dev/cs2800/david11n_SpaceShooterProject/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.CollabProxy.Editor">
-      <HintPath>/Users/benjamin/dev/cs2800/david11n_SpaceShooterProject/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
+      <HintPath>/Volumes/MACSTORE/Users/benjamin/dev/cs2800/david11n_SpaceShooterProject/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>/Users/benjamin/dev/cs2800/david11n_SpaceShooterProject/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>/Volumes/MACSTORE/Users/benjamin/dev/cs2800/david11n_SpaceShooterProject/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.DataPrivacy">
-      <HintPath>/Users/benjamin/dev/cs2800/david11n_SpaceShooterProject/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
+      <HintPath>/Volumes/MACSTORE/Users/benjamin/dev/cs2800/david11n_SpaceShooterProject/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>/Applications/Unity/Unity.app/Contents/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>

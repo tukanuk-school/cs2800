@@ -11,6 +11,7 @@ TagManager:
   - PowerUpBox
   - ProjectilePlayer
   - music
+  - bg
   layers:
   - Default
   - TransparentFX
