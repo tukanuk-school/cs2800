@@ -10,15 +10,37 @@ public class Scene_0_gc : MonoBehaviour
     Button startButton, exitButton;
 
     // sound effects
-    public AudioSource audioSource;
-    AudioClip clickSound;
-    AudioClip bgMusic;
-    
+    public AudioSource clickAS;
+    public AudioSource exitAS;
+    public AudioSource victoryAS;
+    public AudioSource blasterAS;
+    public AudioSource explosionAS;
+
+    // BG music
+    AudioSource BgAs;
+
+
+    public AudioClip BgMusic { get; set; }
+
     void Awake()
     {
-        // TODO: setup audio clips
-        clickSound = (AudioClip) Resources.Load("Audio/click");
-        // AudioSource audioSource = Instantiate(audioSource);
+        // setup sfx
+        clickAS.clip = (AudioClip)Resources.Load("Audio/SFX/click");
+        exitAS.clip = Resources.Load("Audio/SFX/good_bye", typeof(AudioClip)) as AudioClip;
+        victoryAS.clip = Resources.Load("Audio/SFX/you_win", typeof(AudioClip)) as AudioClip;
+        blasterAS.clip = Resources.Load("Audio/SFX/weapon_player", typeof(AudioClip)) as AudioClip;
+        explosionAS.clip = Resources.Load("Audio/SFX/explosion_asteroid", typeof(AudioClip)) as AudioClip;
+
+        DontDestroyOnLoad(clickAS);
+        DontDestroyOnLoad(exitAS);
+        DontDestroyOnLoad(victoryAS);
+        DontDestroyOnLoad(blasterAS);
+        DontDestroyOnLoad(explosionAS);
+
+        // BG Music
+        GameObject go = GameObject.Find("BGMusic");
+        AudioSource audio = go.GetComponent<AudioSource>();
+        audio.Play();
 
     }
 
@@ -50,18 +72,16 @@ public class Scene_0_gc : MonoBehaviour
 
     IEnumerator LoadSceneMM()
     {
-        audioSource.clip = clickSound;
-        audioSource.Play();
-        yield return new WaitForSeconds(clickSound.length);
+        clickAS.Play();
+        yield return new WaitForSeconds(clickAS.clip.length);
 
         SceneManager.LoadScene("_Scene_mainMenu");
     }
     
     IEnumerator QuitGame()
     {
-        audioSource.clip = clickSound;
-        audioSource.Play();
-        yield return new WaitForSeconds(clickSound.length);
+        exitAS.Play();
+        yield return new WaitForSeconds(exitAS.clip.length);
 
         Application.Quit();
     }

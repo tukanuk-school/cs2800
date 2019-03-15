@@ -86,8 +86,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   fireRate: 0.3
-  health: 10
-  score: 100
+  health: 20
+  score: 20
   showDamageDuration: 0.1
   powerUpDropChance: 0.5
   originalColors: []

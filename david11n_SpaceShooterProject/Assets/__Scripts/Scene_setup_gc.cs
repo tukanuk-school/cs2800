@@ -10,14 +10,14 @@ public class Scene_setup_gc : MonoBehaviour
     Button enemiesButton, audioButton, backgroundButton, backButton;
 
     // sound effects
-    public AudioSource audioSource;
-    AudioClip clickSound;
-    AudioClip bgMusic;
+    AudioSource clickAS;
+    //AudioClip clickSound;
+    //AudioClip bgMusic;
 
     void Awake()
     {
         // TODO: setup audio clips
-        clickSound = (AudioClip)Resources.Load("Audio/click");
+        //clickSound = (AudioClip)Resources.Load("Audio/click");
         // AudioSource audioSource = Instantiate(audioSource);
 
     }
@@ -45,6 +45,9 @@ public class Scene_setup_gc : MonoBehaviour
         backButton = go.GetComponent<Button>();
         backButton.onClick.AddListener(() => MenuClick("back"));
 
+        go = GameObject.Find("clickAS");
+        clickAS = go.GetComponent<AudioSource>();
+
     }
 
     // TODO: can I avoid this and call LoadSceneMM directly?
@@ -69,9 +72,8 @@ public class Scene_setup_gc : MonoBehaviour
 
     IEnumerator LoadSceneMM(string butNum)
     {
-        audioSource.clip = clickSound;
-        audioSource.Play();
-        yield return new WaitForSeconds(clickSound.length);
+        clickAS.Play();
+        yield return new WaitForSeconds(clickAS.clip.length);
 
         SceneManager.LoadScene("_Scene_" + butNum);
     }

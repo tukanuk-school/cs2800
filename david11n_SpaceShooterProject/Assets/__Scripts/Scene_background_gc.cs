@@ -14,6 +14,9 @@ public class Scene_background_gc : MonoBehaviour
     Slider xSlider;
     Slider ySlider;
 
+    // new scale
+    Vector3 newScale = new Vector3(1, 1, 0);
+
     // dropdowns
     Dropdown bgDropdown;
 
@@ -24,6 +27,7 @@ public class Scene_background_gc : MonoBehaviour
     public AudioSource audioSource;
     AudioClip clickSound;
     AudioClip bgMusic;
+    AudioSource clickAS;
 
     void Awake()
     {
@@ -46,41 +50,72 @@ public class Scene_background_gc : MonoBehaviour
            BGdropdownClick(bgDropdown);
         });
 
-        //go = GameObject.Find("DifficultyButton");
-        //diffButton = go.GetComponent<Button>();
-        //diffButton.onClick.AddListener(() => MenuClick("difficulty"));
+        go = GameObject.Find("xAxisSlider");
+        xSlider = go.GetComponent<Slider>();
+        xSlider.onValueChanged.AddListener(delegate {
+            ScaleAdjust(xSlider);
+        });
 
-        //go = GameObject.Find("SetupButton");
-        //setupButton = go.GetComponent<Button>();
-        //setupButton.onClick.AddListener(() => MenuClick("setup"));
-
-        //go = GameObject.Find("HistoryButton");
-        //historyButton = go.GetComponent<Button>();
-        //historyButton.onClick.AddListener(() => MenuClick("history"));
+        go = GameObject.Find("yAxisSlider");
+        ySlider = go.GetComponent<Slider>();
+        ySlider.onValueChanged.AddListener(delegate {
+            ScaleAdjust(ySlider);
+        });
 
         go = GameObject.Find("ExitButton");
         backButton = go.GetComponent<Button>();
         backButton.onClick.AddListener(() => MenuClick("back"));
 
-        GameObject quad = GameObject.Find("ImageBG");
-        Renderer r = quad.GetComponent<Renderer>();
-        r.material.mainTexture = (Texture)Resources.Load("Backgrounds/warp_speed");
+        go = GameObject.Find("clickAS");
+        clickAS = go.GetComponent<AudioSource>();
+
+    }
+
+    private void ScaleAdjust(Slider slideValue)
+    {
+        Debug.Log(slideValue + "#: " + slideValue.value);
+
+        GameObject go = GameObject.Find("BGSampleImage");
+        Transform t = go.GetComponent<Transform>();
+
+        newScale = t.localScale;
+
+        if (slideValue.name == "xAxisSlider")
+            newScale.x = slideValue.value;
+        else
+            newScale.y = slideValue.value;
+        
+        t.localScale = newScale;
+
 
     }
 
     private void BGdropdownClick(Dropdown dd)
     {
         // access the value of the dropdown
-        Debug.Log(dd.options[dd.value].text);
+        Debug.Log("#: " + dd.value + " " + dd.options[dd.value].text);
+
+        // bg image frame
+        GameObject go = GameObject.Find("BGSampleImage");
+        Image image = go.GetComponent<Image>();
 
         // set BGImage
-        // add in Switch statement
-        GameObject go = GameObject.Find("BGImage");
-        Image image = go.GetComponent<Image>();
-        Sprite sprite = Resources.Load("Backgrounds/space_disco", typeof(Sprite)) as Sprite;
-        image.sprite = sprite;
+        switch (dd.value) 
+        {
+            case 0:
+                image.sprite = Resources.Load("Backgrounds/space_disco", typeof(Sprite)) as Sprite;
+                break;
+            case 1:
+                image.sprite = Resources.Load("Backgrounds/space_cloud", typeof(Sprite)) as Sprite;
+                break;
+            case 2:
+                image.sprite = Resources.Load("Backgrounds/nebularific", typeof(Sprite)) as Sprite;
+                break;
+            case 3:
+                image.sprite = Resources.Load("Backgrounds/warp_speed", typeof(Sprite)) as Sprite;
+                break;
 
-        // update BG on BACK
+        }
     }
 
     private void MenuClick(string butNum)
@@ -107,19 +142,42 @@ public class Scene_background_gc : MonoBehaviour
 
     IEnumerator LoadSceneMM(string butNum)
     {
-        audioSource.clip = clickSound;
-        audioSource.Play();
-        yield return new WaitForSeconds(clickSound.length);
+        //clickAS.Play();
+        yield return new WaitForSeconds(clickAS.clip.length);
+
+        GameObject go = GameObject.Find("BGImage");
+
+        // set scale of BG
+        Transform t = go.GetComponent<Transform>();
+        Debug.Log("newscale: " + newScale);
+        newScale.x *= 60; // adjust for base scale
+        newScale.y *= 90; // adjust for base scale
+        t.localScale = newScale;
+
+        // set BG iamge
+        Debug.Log("Sprite: " + GameObject.Find("BGSampleImage").GetComponent<Image>().sprite);
+
+        go = GameObject.Find("BGImage");
+        Renderer r = go.GetComponent<Renderer>();
+
+        Debug.Log("material: " + r.material);
+
+        switch (GameObject.Find("BGSampleImage").GetComponent<Image>().sprite.name)
+        {
+            case "nebularific":
+                r.material = Resources.Load("_Materials/nebularific", typeof(Material)) as Material;
+                break;
+            case "space_cloud":
+                r.material = Resources.Load("_Materials/space_cloud", typeof(Material)) as Material;
+                break;
+            case "space_disco":
+                r.material = Resources.Load("_Materials/space_disco", typeof(Material)) as Material;
+                break;
+            case "warp_speed":
+                r.material = Resources.Load("_Materials/warp_speed", typeof(Material)) as Material;
+                break;
+        }
 
         SceneManager.LoadScene("_Scene_" + butNum);
-    }
-
-    IEnumerator QuitGame()
-    {
-        audioSource.clip = clickSound;
-        audioSource.Play();
-        yield return new WaitForSeconds(clickSound.length);
-
-        SceneManager.LoadScene("_Scene_0");
     }
 }

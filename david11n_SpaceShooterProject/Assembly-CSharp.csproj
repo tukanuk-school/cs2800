@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\__Scripts\BoundsCheck.cs" />
+    <Compile Include="Assets\__Scripts\Clock.cs" />
     <Compile Include="Assets\__Scripts\DontDestroy.cs" />
     <Compile Include="Assets\__Scripts\DontDestroyBG.cs" />
     <Compile Include="Assets\__Scripts\Enemy.cs" />
@@ -68,8 +69,11 @@
     <Compile Include="Assets\__Scripts\Enemy_2.cs" />
     <Compile Include="Assets\__Scripts\Enemy_3.cs" />
     <Compile Include="Assets\__Scripts\Enemy_4.cs" />
+    <Compile Include="Assets\__Scripts\EnemyKillManager.cs" />
     <Compile Include="Assets\__Scripts\Main.cs" />
     <Compile Include="Assets\__Scripts\Parallax.cs" />
+    <Compile Include="Assets\__Scripts\Pause.cs" />
+    <Compile Include="Assets\__Scripts\PauseButtons.cs" />
     <Compile Include="Assets\__Scripts\Player.cs" />
     <Compile Include="Assets\__Scripts\PowerUp.cs" />
     <Compile Include="Assets\__Scripts\Projectile.cs" />
@@ -82,6 +86,7 @@
     <Compile Include="Assets\__Scripts\Scene_level_gc.cs" />
     <Compile Include="Assets\__Scripts\Scene_mainMenu_gc.cs" />
     <Compile Include="Assets\__Scripts\Scene_setup_gc.cs" />
+    <Compile Include="Assets\__Scripts\ScoreManager.cs" />
     <Compile Include="Assets\__Scripts\Shield.cs" />
     <Compile Include="Assets\__Scripts\Utils.cs" />
     <Compile Include="Assets\__Scripts\Weapon.cs" />
@@ -304,6 +309,21 @@
     </Reference>
     <Reference Include="UnityEngine.SpatialTracking">
       <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Advertisements">
+      <HintPath>/Volumes/MACSTORE/Users/benjamin/dev/cs2800/david11n_SpaceShooterProject/Library/PackageCache/com.unity.ads@2.3.1/Runtime/UnityEngine.Advertisements.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Advertisements.Editor">
+      <HintPath>/Volumes/MACSTORE/Users/benjamin/dev/cs2800/david11n_SpaceShooterProject/Library/PackageCache/com.unity.ads@2.3.1/Runtime/UnityEngine.Advertisements.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Analytics.Editor">
+      <HintPath>/Volumes/MACSTORE/Users/benjamin/dev/cs2800/david11n_SpaceShooterProject/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Analytics.StandardEvents">
+      <HintPath>/Volumes/MACSTORE/Users/benjamin/dev/cs2800/david11n_SpaceShooterProject/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.StandardEvents.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Analytics.Tracker">
+      <HintPath>/Volumes/MACSTORE/Users/benjamin/dev/cs2800/david11n_SpaceShooterProject/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>/Applications/Unity/Unity.app/Contents/NetStandard/ref/2.0.0/netstandard.dll</HintPath>

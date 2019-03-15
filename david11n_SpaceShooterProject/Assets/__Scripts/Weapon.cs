@@ -51,6 +51,9 @@ public class Weapon : MonoBehaviour
     public float lastShotTime;
     private Renderer collarRend;
 
+    // blaster sound
+    AudioSource blasterAS;
+
 
     // Start is called before the first frame update
     void Start()
@@ -74,6 +77,16 @@ public class Weapon : MonoBehaviour
         {
             rootGO.GetComponent<Player>().fireDelegate += Fire;
         }
+
+        // setup the blaster sound
+        GameObject goBs = GameObject.Find("blasterAS");
+        blasterAS = goBs.GetComponent<AudioSource>();
+
+         if (blasterAS.clip == null)
+        {
+            blasterAS.clip = Resources.Load("Audio/SFX/weapon_player", typeof(AudioClip) ) as AudioClip;
+        }
+
     }
 
     public WeaponType type
@@ -130,6 +143,9 @@ public class Weapon : MonoBehaviour
                 p.rigid.velocity = p.transform.rotation * vel;
                 break;
         }
+
+        // p[ay the blaster sound
+        blasterAS.Play(); 
     }
 
     public Projectile MakeProjectile()

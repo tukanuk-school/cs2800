@@ -28,6 +28,9 @@ public class Player : MonoBehaviour
     // Create a WeaponFireDelegate field 
     public WeaponFireDelegate fireDelegate;
 
+    // blaster sound
+    //AudioSource blasterAS;
+
     private void Start()
     {
         if (S == null)
@@ -43,6 +46,17 @@ public class Player : MonoBehaviour
         // reset the weapons to start with _Palyer with 1 blaster
         ClearWeapons();
         weapons[0].SetType(WeaponType.blaster);
+
+        // setup the blaster sound
+        //GameObject goBs = GameObject.Find("blasterAS");
+        //blasterAS = goBs.GetComponent<AudioSource>();
+
+        //if (blasterAS.clip == null)
+        //{
+        //    blasterAS.clip = Resources.Load("Audio/SFX/weapon_player", typeof(AudioClip)) as AudioClip;
+        //}
+
+        //Debug.Log("blasterAS: " + blasterAS.clip);
     }
 
  

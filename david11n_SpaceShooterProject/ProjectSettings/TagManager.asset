@@ -12,6 +12,8 @@ TagManager:
   - ProjectilePlayer
   - music
   - bg
+  - kill
+  - eBut
   layers:
   - Default
   - TransparentFX

@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
@@ -8,10 +10,12 @@ public class Enemy : MonoBehaviour
     [Header("Set in Inspector: Enemy")]
     public float speed = 10f;
     public float fireRate = 0.3f;
-    public float health = 10;
-    public float score = 100;
+    public int score = 100;
     public float showDamageDuration = 0.1f; // seconds to show damage
     public float powerUpDropChance = 1f; // Chance to drop of PowerUp
+
+    //[SerializeField]
+    float health = ScoreManager.E0;
 
     [Header("Set dynamically: Enemy")]
     public Color[] originalColors;
@@ -21,6 +25,9 @@ public class Enemy : MonoBehaviour
     public bool notifiedOfDestruction = false;
 
     protected BoundsCheck bndCheck;
+
+    // explosion AudioSource
+    AudioSource explosionAS;
 
     // This is a property
     public Vector3 pos
@@ -45,14 +52,22 @@ public class Enemy : MonoBehaviour
         {
             originalColors[i] = materials[i].color;
         }
-
     }
+
+    void Start()
+    {
+        GameObject go = GameObject.Find("explosionAS");
+        explosionAS = go.GetComponent<AudioSource>();
+
+        Debug.Log(health);
+    }
+
 
 
     // Start is called before the first frame update
     //void Start()
     //{
-        
+
     //}
 
     // Update is called once per frame
@@ -96,7 +111,9 @@ public class Enemy : MonoBehaviour
                 // hurt this enemy
                 ShowDamage();
                 health -= Main.GetWeaponDefinition(p.type).damageOnHit;
-                print("HIT" + otherGO.name);
+                //print("HIT " + otherGO.name);
+                //Debug.Log("I was hit: " + this.name);
+
 
                 if (health <= 0)
                 {
@@ -107,14 +124,52 @@ public class Enemy : MonoBehaviour
                     notifiedOfDestruction = true;
 
                     // destroy this enemy
+                    ScoreManager.score += (int) score;
+
+                    // update the kill count
+                    UpdateEnemyKillCount(this.name);
+
                     Destroy(this.gameObject);
+                    StartCoroutine(Explosion());
                 }
                 Destroy(otherGO);
                 break;
             default:
-                print("Enemy hit by non-ProjectilePlayer" + otherGO.name);
+                print("Enemy hit by non-ProjectilePlayer " + otherGO.name);
                 break;
         }
+    }
+
+    private void UpdateEnemyKillCount(string enemyName)
+    {
+        //Debug.Log("name: " + name);
+        //Debug.Log("score: " + score.ToString());
+
+        switch (enemyName)
+        {
+            case "Enemy_0(Clone)":
+                EnemyKillManager.killCounts[EnemyKillManager.E0] += 1;  
+                break;
+            case "Enemy_1(Clone)":
+                EnemyKillManager.killCounts[EnemyKillManager.E1] += 1;
+                break;
+            case "Enemy_2(Clone)":
+                EnemyKillManager.killCounts[EnemyKillManager.E2] += 1;
+                break;
+            case "Enemy_3(Clone)":
+                EnemyKillManager.killCounts[EnemyKillManager.E3] += 1;
+                break;
+            case "Enemy_4(Clone)":
+                EnemyKillManager.killCounts[EnemyKillManager.E4] += 1;
+                break;
+        }
+        Debug.Log(EnemyKillManager.killCounts);
+    }
+
+    IEnumerator Explosion()
+    {
+        explosionAS.Play();
+        yield return new WaitForSeconds(explosionAS.clip.length);
     }
 
     void ShowDamage()

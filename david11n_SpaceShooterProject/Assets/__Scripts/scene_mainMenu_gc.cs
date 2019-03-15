@@ -10,14 +10,14 @@ public class Scene_mainMenu_gc: MonoBehaviour
     Button startButton, diffButton, setupButton, historyButton, backButton;
 
     // sound effects
-    public AudioSource audioSource;
-    AudioClip clickSound;
-    AudioClip bgMusic;
+    AudioSource audioSource;
+    //AudioClip clickSound;
+    //AudioClip bgMusic;
     
     void Awake()
     {
         // TODO: setup audio clips
-        clickSound = (AudioClip) Resources.Load("Audio/click");
+        //clickSound = (AudioClip) Resources.Load("Audio/click");
         // AudioSource audioSource = Instantiate(audioSource);
 
     }
@@ -49,6 +49,15 @@ public class Scene_mainMenu_gc: MonoBehaviour
         backButton = go.GetComponent<Button>();
         backButton.onClick.AddListener( () => MenuClick("back") );
 
+        go = GameObject.Find("clickAS");
+        audioSource = go.GetComponent<AudioSource>();
+
+        // setup the blaster sound
+        AudioSource blasterAS;
+        GameObject goBs = GameObject.Find("blasterAS");
+        blasterAS = goBs.GetComponent<AudioSource>();
+        //Debug.Log("blasterAS: " + blasterAS.clip);
+
     }
 
     private void MenuClick(string butNum)
@@ -75,18 +84,16 @@ public class Scene_mainMenu_gc: MonoBehaviour
 
     IEnumerator LoadSceneMM(string butNum)
     {
-        audioSource.clip = clickSound;
         audioSource.Play();
-        yield return new WaitForSeconds(clickSound.length);
+        yield return new WaitForSeconds(audioSource.clip.length);
 
         SceneManager.LoadScene("_Scene_" + butNum);
     }
     
     IEnumerator QuitGame()
     {
-        audioSource.clip = clickSound;
         audioSource.Play();
-        yield return new WaitForSeconds(clickSound.length);
+        yield return new WaitForSeconds(audioSource.clip.length);
 
         SceneManager.LoadScene("_Scene_0");
     }
