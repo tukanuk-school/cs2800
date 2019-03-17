@@ -18,6 +18,10 @@ public class Enemy_2 : Enemy
     // Start is called before the first frame update
     void Start()
     {
+        // Set the health and points of this enemy type
+        health = ScoreManager.E2;
+        points = ScoreManager.E2points;
+
         // Pick any point on the left side of the screen
         p0 = Vector3.zero;
         p0.x = -bndCheck.camWidth - bndCheck.radius;
@@ -37,6 +41,9 @@ public class Enemy_2 : Enemy
 
         // Set the birth time to the current time
         birthTime = Time.time;
+
+        // set the color of the materials based on the ScoreManager
+        SetColour(ScoreManager.E2Color);
     }
 
     public override void Move()

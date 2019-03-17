@@ -19,6 +19,8 @@ public class EnemyKillManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        killCounts.Clear();
+
         GameObject go = GameObject.Find("E0");
         E0 = go.GetComponent<Text>();
         go = GameObject.Find("E1");
@@ -52,6 +54,15 @@ public class EnemyKillManager : MonoBehaviour
         foreach (var kc in killCounts)
         {
             kc.Key.text = kc.Key.name + ": " + kc.Value.ToString();
+        }
+    }
+
+    public void ClearKillCount()
+    {
+        var keys = new List<Text>(killCounts.Keys);
+        foreach (Text key in keys)
+        {
+            killCounts[key] = 0;
         }
     }
 }

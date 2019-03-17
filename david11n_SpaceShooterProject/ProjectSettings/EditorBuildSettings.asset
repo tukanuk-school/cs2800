@@ -30,8 +30,14 @@ EditorBuildSettings:
     path: Assets/Scenes/_Scene_history.unity
     guid: d2b0c3c095f6644d9bfa4e312077da3a
   - enabled: 1
-    path: Assets/Scenes/_Scene_level.unity
+    path: Assets/Scenes/_Scene_bronze.unity
     guid: 3b76e5435abdd44f1ad062e40cefa410
+  - enabled: 1
+    path: Assets/Scenes/_Scene_silver.unity
+    guid: 244bbd840305d4091997cbdcf05a2a58
+  - enabled: 1
+    path: Assets/Scenes/_Scene_gold.unity
+    guid: c2b2fd9e9048c4102b3eedd573c84f3d
   - enabled: 1
     path: Assets/Scenes/_Scene_setup.unity
     guid: f94014b67c20b4afa88d5b9800fa13ba

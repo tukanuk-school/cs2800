@@ -72,28 +72,28 @@ public class Scene_audio_gc : MonoBehaviour
         {
             { "Epic Sapae Jam (default)", "music_background" },
             { "Space Rocks", "Galaga_88_Arcade" },
-            { "Testing", "Dict_methoid"}
+            { "Moon Mario", "super_mario_kart"}
         };
 
         victoryDropdownDict = new Dictionary<string, string>
         {
             { "You're a winner (default)", "you_win" },
-            { "Space Hero", "you_win"},
-            { "Congradulations", "you_win"}
+            { "Space Hero", "botchord"},
+            { "Congradulations", "etta_congradulations"}
         };
 
         blasterDropdownDict = new Dictionary<string, string>
         {
             { "Laser Blast (default)", "weapon_player"},
-            { "Phaser Fun", "weapon_player" },
-            { "Pew Pew Pew", "weapon_player" }
+            { "Phaser Fun", "weapon_enemy" },
+            { "Pew Pew Pew", "pewpew" }
         };
 
         explosionDropdownDict = new Dictionary<string, string>
         {
             { "Boom (default)", "explosion_asteroid" },
-            { "Bang", "explosion_asteroid" },
-            { "Kapow", "explosion_asteroid" }
+            { "Bang", "explosion_enemy" },
+            { "Kapow", "explosion_player" }
         };
 
         // attatch volume sliders

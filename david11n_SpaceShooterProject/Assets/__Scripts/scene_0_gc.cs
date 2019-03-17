@@ -20,6 +20,10 @@ public class Scene_0_gc : MonoBehaviour
     AudioSource BgAs;
 
 
+    //Maybe
+    public ScoreManager scoreManager;
+
+
     public AudioClip BgMusic { get; set; }
 
     void Awake()
@@ -37,10 +41,19 @@ public class Scene_0_gc : MonoBehaviour
         DontDestroyOnLoad(blasterAS);
         DontDestroyOnLoad(explosionAS);
 
+
+        // Setup the persistant scoreManager
+        scoreManager = GameObject.Find("scoreManager").GetComponent<ScoreManager>();
+        DontDestroyOnLoad(scoreManager);
+
+
         // BG Music
         GameObject go = GameObject.Find("BGMusic");
         AudioSource audio = go.GetComponent<AudioSource>();
         audio.Play();
+
+        // Reset game score
+        ScoreManager.scoreToNextLevel = ScoreManager.BronzePointsToWin;
 
     }
 

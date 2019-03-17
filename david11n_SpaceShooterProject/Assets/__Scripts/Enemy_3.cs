@@ -10,16 +10,20 @@ public class Enemy_3 : Enemy
     public float lifeTime = 5;
 
     [Header("Set Dynamically: Enemy_3")]
-    public Vector3[] points;
+    public Vector3[] vectorPoints;
     public float birthTime;
 
     // Start is called before the first frame update
     void Start()
     {
-        points = new Vector3[3];
+        // Set the health and points of this enemy type
+        health = ScoreManager.E3;
+        points = ScoreManager.E3points;
+
+        vectorPoints = new Vector3[3];
 
         // Main.SpawnEnemy() sets the start position
-        points[0] = pos;
+        vectorPoints[0] = pos;
 
         // Set xMin and xMax the smae way that Main.SpawnEnemy() does
         float xMin = -bndCheck.camWidth + bndCheck.radius;
@@ -30,16 +34,19 @@ public class Enemy_3 : Enemy
         v = Vector3.zero;
         v.x = Random.Range(xMin, xMax);
         v.y = -bndCheck.camHeight + Random.Range(2.75f, 2);
-        points[1] = v;
+        vectorPoints[1] = v;
 
         // pick a final position above the screen
         v = Vector3.zero;
         v.y = pos.y;
         v.x = Random.Range(xMin, xMax);
-        points[2] = v;
+        vectorPoints[2] = v;
 
         // Set the birthtime to now
         birthTime = Time.time;
+
+        // set the color of the materials based on the ScoreManager
+        SetColour(ScoreManager.E3Color);
     }
 
     public override void Move()
@@ -56,8 +63,8 @@ public class Enemy_3 : Enemy
         // iterpolate the three bezier curve points
         Vector3 p01, p12;
         u = u - 0.2f * Mathf.Sin(u * Mathf.PI * 2);
-        p01 = (1 - u) * points[0] + u * points[1];
-        p12 = (1 - u) * points[1] + u * points[2];
+        p01 = (1 - u) * vectorPoints[0] + u * vectorPoints[1];
+        p12 = (1 - u) * vectorPoints[1] + u * vectorPoints[2];
         pos = (1 - u) * p01 + u * p12;
     }
 }

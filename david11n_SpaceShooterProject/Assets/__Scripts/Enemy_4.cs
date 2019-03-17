@@ -28,11 +28,17 @@ public class Enemy_4 : Enemy
 
     private Vector3 p0, p1;
     private float timeStart;
-    private float duration = 4; 
+    private float duration = 4;
 
     // Start is called before the first frame update
     void Start()
     {
+        // Set the health and points of this enemy type
+        //transform.parent.GetComponent<Enemy>().health = ScoreManager.E4;
+        //transform.parent.GetComponent<Enemy>().points = ScoreManager.E4points;
+        health = ScoreManager.E4;
+        points = ScoreManager.E4points;
+
         // Main.SpawnEnemy() choose inital point
         p0 = p1 = pos;
 
@@ -47,8 +53,12 @@ public class Enemy_4 : Enemy
             {
                 prt.go = t.gameObject;
                 prt.mat = prt.go.GetComponent<Renderer>().material;
+                prt.health = ScoreManager.E4;
             }
         }
+
+        // set the color of the materials based on the ScoreManager
+        SetColour(ScoreManager.E4Color);
     }
 
     void InitMovement()
@@ -174,6 +184,9 @@ public class Enemy_4 : Enemy
                 {
                     // instead of destroying enemny, disable part
                     prtHit.go.SetActive(false);
+
+                    // explosion sound for part
+                    explosionAS.Play();
                 }
 
                 // check to see if the whole ship is destroyed
@@ -189,7 +202,15 @@ public class Enemy_4 : Enemy
                 if (allDestroyed)
                 {
                     Main.S.ShipDestroyed(this);
+
+                    // give us some points
+                    ScoreManager.score += (int)points;
+
+                    // up the kill count
+                    EnemyKillManager.killCounts[EnemyKillManager.E4] += 1;
+
                     Destroy(this.gameObject);
+
                 }
                 Destroy(other);
                 break;

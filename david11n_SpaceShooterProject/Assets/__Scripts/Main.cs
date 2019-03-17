@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -33,35 +34,17 @@ public class Main : MonoBehaviour
     Text E3;
     Text E4;
 
+    // level settings
+    public int maxEnemyOnScreen;
+    public int levelWinPoints;
+    public ScoreManager.GameLevels levelDifficulty;
 
-
-    public void ShipDestroyed(Enemy e)
-    {
-        // potentially generate a PowerUp
-        if (Random.value <= e.powerUpDropChance)
-        {
-            int ndx = Random.Range(0, powerUpFrequnecy.Length);
-            WeaponType puType = powerUpFrequnecy[ndx];
-
-            // spawn a powerup
-            GameObject go = Instantiate(prefabPowerUp) as GameObject;
-            PowerUp pu = go.GetComponent<PowerUp>();
-            pu.SetType(puType);
-
-            // set it to the position of the destroyed ship
-            pu.transform.position = e.transform.position;
-        }
-
-
-    }
     void Awake()
     {
         S = this;
+
         // Set bndCheck to referecne trhe BoundsCheck component on this GameObject
         bndCheck = GetComponent<BoundsCheck>();
-
-        // Invoke SpawnEnemy() once (in 2 seconds)
-        Invoke("SpawnEnemy", 1f / enemySpawnPerSecond);
 
         // A generic dictionary with WeaponType as the key
         WEAP_DICT = new Dictionary<WeaponType, WeaponDefinition>();
@@ -71,6 +54,7 @@ public class Main : MonoBehaviour
         }
 
         // UI
+
         GameObject go = GameObject.Find("time");
         gameTime = go.GetComponent<Text>();
         //Debug.Log("clock at start: " + gameTime.text);
@@ -81,7 +65,6 @@ public class Main : MonoBehaviour
 
         go = GameObject.Find("level");
         level = go.GetComponent<Text>();
-        Debug.Log("level at start: " + level.text);
 
         go = GameObject.Find("E0");
         E0= go.GetComponent<Text>();
@@ -97,13 +80,43 @@ public class Main : MonoBehaviour
 
         go = GameObject.Find("E4");
         E4 = go.GetComponent<Text>();
+
     }
 
     // Start is called before the first frame update
     void Start()
     {
         startTime = Time.time;
-        Debug.Log("Start time: " + startTime.ToString("000.0"));
+        //Debug.Log("Start time: " + startTime.ToString("000.0"));
+
+        // set inital prefabEnemies
+        prefabEnemies = ScoreManager.currentPrefabEnemies.ToArray();
+
+        // set level settings
+        levelDifficulty = ScoreManager.currentGameLevel;
+        levelWinPoints = ScoreManager.scoreToNextLevel;
+
+        switch (levelDifficulty)
+        {
+            case ScoreManager.GameLevels.Bronze:
+                maxEnemyOnScreen = ScoreManager.BronzeMaxEnemies;
+                level.text = ScoreManager.currentGameLevel.ToString();
+                break;
+            case ScoreManager.GameLevels.Silver:
+                maxEnemyOnScreen = ScoreManager.SilverMaxEnemies;
+                level.text = ScoreManager.currentGameLevel.ToString();
+                break;
+            case ScoreManager.GameLevels.Gold:
+                maxEnemyOnScreen = ScoreManager.GoldMaxEnemies;
+                level.text = ScoreManager.currentGameLevel.ToString();
+                break;
+        }
+
+        Debug.Log(string.Format("{0} level: {1} points needed. {2} enemies onscreen",
+            levelDifficulty, levelWinPoints.ToString(), maxEnemyOnScreen.ToString()));
+
+        // Invoke SpawnEnemy() once (in 2 seconds)
+        Invoke("SpawnEnemy", 1f / enemySpawnPerSecond);
     }
 
     // Update is called once per frame
@@ -116,27 +129,37 @@ public class Main : MonoBehaviour
 
     public void SpawnEnemy()
     {
-        // Pick a random enemy PreFab to instantiate
-        int ndx = Random.Range(0, prefabEnemies.Length);
-        GameObject go = Instantiate<GameObject>(prefabEnemies[ndx]);
-
-        // Position the enemy above the screen with a random x position 
-        float enemyPadding = enemyDefaultPadding;
-        if (go.GetComponent<BoundsCheck>() != null)
+        if (EnemyCount() < maxEnemyOnScreen)
         {
-            enemyPadding = Mathf.Abs(go.GetComponent<BoundsCheck>().radius);
+            // Pick a random enemy PreFab to instantiate
+            int ndx = UnityEngine.Random.Range(0, prefabEnemies.Length);
+            GameObject go = Instantiate<GameObject>(prefabEnemies[ndx]);
+
+            // Position the enemy above the screen with a random x position 
+            float enemyPadding = enemyDefaultPadding;
+            if (go.GetComponent<BoundsCheck>() != null)
+            {
+                enemyPadding = Mathf.Abs(go.GetComponent<BoundsCheck>().radius);
+            }
+
+            // set the initial position for the spawned Enemy
+            Vector3 pos = Vector3.zero;
+            float xMin = -bndCheck.camWidth + enemyPadding;
+            float xMax = bndCheck.camWidth - enemyPadding;
+            pos.x = UnityEngine.Random.Range(xMin, xMax);
+            pos.y = bndCheck.camHeight + enemyPadding;
+            go.transform.position = pos;
         }
-
-        // set the initial position for the spawned Enemy
-        Vector3 pos = Vector3.zero;
-        float xMin = -bndCheck.camWidth + enemyPadding;
-        float xMax = bndCheck.camWidth - enemyPadding;
-        pos.x = Random.Range(xMin, xMax);
-        pos.y = bndCheck.camHeight + enemyPadding;
-        go.transform.position = pos;
-
         // Invoke SpawnEnemy() again
         Invoke("SpawnEnemy", 1f / enemySpawnPerSecond);
+    }
+
+    // counts the enemies on screen so we can know if there are too many
+    private int EnemyCount()
+    {
+        GameObject[] goa = GameObject.FindGameObjectsWithTag("Enemy");
+        //Debug.Log("Enemy onscree: " + goa.Length.ToString());
+        return goa.Length;
     }
 
     public void DelayedRestart(float delay)
@@ -167,14 +190,31 @@ public class Main : MonoBehaviour
 
         return (new WeaponDefinition());
     }
-
-
     public void IncreaseScore()
     {
         Debug.Log("++score!");
 
     }
 
+    public void ShipDestroyed(Enemy e)
+    {
+        // potentially generate a PowerUp
+        if (UnityEngine.Random.value <= e.powerUpDropChance)
+        {
+            int ndx = UnityEngine.Random.Range(0, powerUpFrequnecy.Length);
+            WeaponType puType = powerUpFrequnecy[ndx];
+
+            // spawn a powerup
+            GameObject go = Instantiate(prefabPowerUp) as GameObject;
+            PowerUp pu = go.GetComponent<PowerUp>();
+            pu.SetType(puType);
+
+            // set it to the position of the destroyed ship
+            pu.transform.position = e.transform.position;
+        }
+
+
+    }
 
 
 

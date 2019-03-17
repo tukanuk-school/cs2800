@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Enemy : MonoBehaviour
 {
@@ -10,12 +11,9 @@ public class Enemy : MonoBehaviour
     [Header("Set in Inspector: Enemy")]
     public float speed = 10f;
     public float fireRate = 0.3f;
-    public int score = 100;
+    //public int score = 100;
     public float showDamageDuration = 0.1f; // seconds to show damage
     public float powerUpDropChance = 1f; // Chance to drop of PowerUp
-
-    //[SerializeField]
-    float health = ScoreManager.E0;
 
     [Header("Set dynamically: Enemy")]
     public Color[] originalColors;
@@ -24,10 +22,20 @@ public class Enemy : MonoBehaviour
     public float damageDoneTime;
     public bool notifiedOfDestruction = false;
 
+    // enemy hp and points
+    public float health; 
+    public int points; 
+
     protected BoundsCheck bndCheck;
 
     // explosion AudioSource
-    AudioSource explosionAS;
+    protected AudioSource explosionAS;
+
+    // should I move?
+    bool shouldMove = true;
+
+    // old colour, after a colour change
+    Color oldColour; // = new Color();
 
     // This is a property
     public Vector3 pos
@@ -42,38 +50,54 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    //private GameObject levelPanel;
+
     void Awake()
     {
         bndCheck = GetComponent<BoundsCheck>();
         // get materials and colors for this GameObject and its children
         materials = Utils.GetMaterials(gameObject);
-        originalColors = new Color[materials.Length];
-        for (int i=0; i<materials.Length; i++)
-        {
-            originalColors[i] = materials[i].color;
-        }
-    }
 
-    void Start()
-    {
+        //originalColors = new Color[materials.Length];
+        //for (int i=0 ; i< materials.Length ; i++)
+        //{
+        //    originalColors[i] = materials[i].color;
+        //}
+
         GameObject go = GameObject.Find("explosionAS");
         explosionAS = go.GetComponent<AudioSource>();
 
-        Debug.Log(health);
+        // this is a total hack to get the enemies to stop moving in settings screens.
+        // see if(shouldMove) Move() in Update()
+        if (SceneManager.GetActiveScene().name == "_Scene_bronze" ||
+            SceneManager.GetActiveScene().name == "_Scene_silver" ||
+            SceneManager.GetActiveScene().name == "_Scene_gold" ||
+            SceneManager.GetActiveScene().name == "_Scene_enemies" )
+        {
+            shouldMove = false;
+        }
+
+        //levelPanel = GameObject.Find("levelPanel");
+
     }
 
-
-
     // Start is called before the first frame update
-    //void Start()
-    //{
+    void Start()
+    {
+        // Set the health and points of this enemy type
+        health = ScoreManager.E0;
+        points = ScoreManager.E0points;
 
-    //}
+        // set the color of the materials based on the ScoreManager
+        SetColour(ScoreManager.E0Color);
+    }
 
     // Update is called once per frame
     void Update()
     {
-        Move();
+        // if the enemy should move, move!
+        // part two of my hack to prevent enemies from moving in certain scenes.
+        if (shouldMove) Move();
 
         if (showingDamage && Time.time > damageDoneTime)
         {
@@ -86,8 +110,26 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    // set the color of the materials based on the ScoreManager
+    public void SetColour(Color colour)
+    {
+        //Debug.Log ("oldcolor r: " + oldColour.r);
+        //oldColour = materials[0].color;
 
+        foreach (var material in materials)
+        {
+            material.color = colour;
+        }
 
+        // when the colour is change set new original colours
+        originalColors = new Color[materials.Length];
+        for (int i = 0; i < materials.Length; i++)
+        {
+            originalColors[i] = materials[i].color;
+        }
+    }
+
+    // the base movements for each enemy. All enemies use the y axis behaviour
     public virtual void Move() 
     {
         Vector3 tempPos = pos;
@@ -97,7 +139,7 @@ public class Enemy : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-         GameObject otherGO = collision.gameObject;
+        GameObject otherGO = collision.gameObject;
         switch (otherGO.tag)
         {
             case "ProjectilePlayer":
@@ -123,8 +165,8 @@ public class Enemy : MonoBehaviour
                     }
                     notifiedOfDestruction = true;
 
-                    // destroy this enemy
-                    ScoreManager.score += (int) score;
+                    // give us some points
+                    ScoreManager.score += (int)points;
 
                     // update the kill count
                     UpdateEnemyKillCount(this.name);
@@ -133,12 +175,18 @@ public class Enemy : MonoBehaviour
                     StartCoroutine(Explosion());
                 }
                 Destroy(otherGO);
+
+                //EndOfLevelCheck();
+
                 break;
             default:
-                print("Enemy hit by non-ProjectilePlayer " + otherGO.name);
+                //print("Enemy hit by non-ProjectilePlayer " + otherGO.name);
                 break;
         }
     }
+
+
+
 
     private void UpdateEnemyKillCount(string enemyName)
     {
@@ -163,7 +211,7 @@ public class Enemy : MonoBehaviour
                 EnemyKillManager.killCounts[EnemyKillManager.E4] += 1;
                 break;
         }
-        Debug.Log(EnemyKillManager.killCounts);
+       
     }
 
     IEnumerator Explosion()

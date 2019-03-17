@@ -14,7 +14,8 @@ public class Pause : MonoBehaviour
     void Start()
     {
         pausePanel = GameObject.Find("PausePanel");
-        pausePanel.SetActive(false);
+        if (pausePanel.activeInHierarchy == true)
+            pausePanel.SetActive(false);
 
         pauseButton = GetComponent<Button>();
         pauseButton.onClick.AddListener(PauseGame);

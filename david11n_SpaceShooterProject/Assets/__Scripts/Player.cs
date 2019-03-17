@@ -28,9 +28,6 @@ public class Player : MonoBehaviour
     // Create a WeaponFireDelegate field 
     public WeaponFireDelegate fireDelegate;
 
-    // blaster sound
-    //AudioSource blasterAS;
-
     private void Start()
     {
         if (S == null)
@@ -41,22 +38,10 @@ public class Player : MonoBehaviour
         {
             Debug.LogError("Player.Awake() - Attempted to assing a second player.S!");
         }
-        //fireDelegate += TempFire;
 
         // reset the weapons to start with _Palyer with 1 blaster
         ClearWeapons();
         weapons[0].SetType(WeaponType.blaster);
-
-        // setup the blaster sound
-        //GameObject goBs = GameObject.Find("blasterAS");
-        //blasterAS = goBs.GetComponent<AudioSource>();
-
-        //if (blasterAS.clip == null)
-        //{
-        //    blasterAS.clip = Resources.Load("Audio/SFX/weapon_player", typeof(AudioClip)) as AudioClip;
-        //}
-
-        //Debug.Log("blasterAS: " + blasterAS.clip);
     }
 
  
@@ -76,20 +61,11 @@ public class Player : MonoBehaviour
         // Rotate the ship to make it feel more dynamic
         transform.rotation = Quaternion.Euler(yAxis * pitchMult, xAxis * rollMult, 0);
 
-        // Allow the ship to fire
-        //if (Input.GetKeyDown(KeyCode.Space))
-        //{
-        //    TempFire();
-        //}
-
         // use the fireDelegate to fire Weapons
         if (Input.GetAxis("Jump") == 1 && fireDelegate != null)
         {
             fireDelegate();
         }
-
-
-
     }
 
     private void OnTriggerEnter(Collider other)
@@ -152,19 +128,6 @@ public class Player : MonoBehaviour
 
     }
 
-    //void TempFire() 
-    //{
-    //    GameObject projGO = Instantiate<GameObject>(projectilePreFab);
-    //    projGO.transform.position = transform.position;
-    //    Rigidbody rigidB = projGO.GetComponent<Rigidbody>();
-    //    //rigidB.velocity = Vector3.up * projectileSpeed;
-
-    //    Projectile proj = projGO.GetComponent<Projectile>();
-    //    proj.type = WeaponType.blaster;
-    //    float tSpeed = Main.GetWeaponDefinition(proj.type).velocity;
-    //    rigidB.velocity = Vector3.up * tSpeed;
-    //}
-
 
     public float shieldLevel
     {
@@ -179,6 +142,11 @@ public class Player : MonoBehaviour
             if (value < 0)
             {
                 Destroy(this.gameObject);
+
+                // if you die reset points and level
+                ScoreManager.currentGameLevel = ScoreManager.GameLevels.Bronze;
+                ScoreManager.scoreToNextLevel = ScoreManager.BronzePointsToWin;
+
                 Main.S.DelayedRestart(gameRestartDelay);
             }
         }

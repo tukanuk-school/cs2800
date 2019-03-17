@@ -17,8 +17,16 @@ public class Enemy_1 : Enemy
     // Start is called before the first frame update
     void Start()
     {
+        // Set the health and points of this enemy type
+        health = ScoreManager.E1;
+        points = ScoreManager.E1points;
+
+        // initial position and birth
         xO = pos.x;
-        birthTime = Time.time;          
+        birthTime = Time.time;
+
+        // set the color of the materials based on the ScoreManager
+        SetColour(ScoreManager.E1Color);
     }
 
     // overide the move function of Enemy

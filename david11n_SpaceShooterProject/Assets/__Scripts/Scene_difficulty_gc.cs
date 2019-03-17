@@ -14,14 +14,14 @@ public class Scene_difficulty_gc : MonoBehaviour
     Button goldButton;
 
     // sound effects
-    public AudioSource audioSource;
-    AudioClip clickSound;
-    AudioClip bgMusic;
+    public AudioSource clickAS;
+    //AudioClip clickSound;
+    //AudioClip bgMusic;
 
     void Awake()
     {
-        // TODO: setup audio clips
-        clickSound = (AudioClip)Resources.Load("Audio/click");
+        //  setup audio clips
+        //clickSound = (AudioClip)Resources.Load("Audio/click");
         // AudioSource audioSource = Instantiate(audioSource);
 
     }
@@ -34,23 +34,21 @@ public class Scene_difficulty_gc : MonoBehaviour
 
         go = GameObject.Find("BronzeButton");
         bronzeButton = go.GetComponent<Button>();
-        bronzeButton.onClick.AddListener(() => MenuClick("level"));
+        bronzeButton.onClick.AddListener(() => MenuClick("bronze"));
 
-        //go = GameObject.Find("DifficultyButton");
-        //diffButton = go.GetComponent<Button>();
-        //diffButton.onClick.AddListener(() => MenuClick("difficulty"));
+        go = GameObject.Find("SilverButton");
+        silverButton = go.GetComponent<Button>();
+        silverButton.onClick.AddListener(() => MenuClick("silver"));
 
-        //go = GameObject.Find("SetupButton");
-        //setupButton = go.GetComponent<Button>();
-        //setupButton.onClick.AddListener(() => MenuClick("setup"));
-
-        //go = GameObject.Find("HistoryButton");
-        //historyButton = go.GetComponent<Button>();
-        //historyButton.onClick.AddListener(() => MenuClick("history"));
+        go = GameObject.Find("GoldButton");
+        goldButton = go.GetComponent<Button>();
+        goldButton.onClick.AddListener(() => MenuClick("gold"));
 
         go = GameObject.Find("ExitButton");
         backButton = go.GetComponent<Button>();
         backButton.onClick.AddListener(() => MenuClick("back"));
+
+        clickAS = GameObject.Find("clickAS").GetComponent<AudioSource>();
 
     }
 
@@ -58,16 +56,13 @@ public class Scene_difficulty_gc : MonoBehaviour
     {
         switch (butNum)
         {
-            case "level":
+            case "bronze":
                 StartCoroutine(LoadSceneMM(butNum));
                 break;
-            case "difficulty":
+            case "silver":
                 StartCoroutine(LoadSceneMM(butNum));
                 break;
-            case "setup":
-                StartCoroutine(LoadSceneMM(butNum));
-                break;
-            case "history":
+            case "gold":
                 StartCoroutine(LoadSceneMM(butNum));
                 break;
             case "back":
@@ -78,9 +73,8 @@ public class Scene_difficulty_gc : MonoBehaviour
 
     IEnumerator LoadSceneMM(string butNum)
     {
-        audioSource.clip = clickSound;
-        audioSource.Play();
-        yield return new WaitForSeconds(clickSound.length);
+        clickAS.Play();
+        yield return new WaitForSeconds(clickAS.clip.length);
 
         SceneManager.LoadScene("_Scene_" + butNum);
     }

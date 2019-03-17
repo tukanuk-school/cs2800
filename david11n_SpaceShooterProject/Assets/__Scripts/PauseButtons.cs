@@ -21,20 +21,17 @@ public class PauseButtons : MonoBehaviour
         butt[1].onClick.AddListener(RestartLevel);
         butt[2].onClick.AddListener(MainMenu);
         pausePanel = GameObject.Find("PausePanel");
-
-        foreach (var but in butt)
-        {
-            Debug.Log("n: " + but.name);
-        }
     }
 
     private void RestartLevel()
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene("_Scene_1");
     }
 
     private void MainMenu()
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene("_Scene_0");
     }
 
